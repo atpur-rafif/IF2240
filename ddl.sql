@@ -55,7 +55,7 @@ CREATE TABLE antrian (
 	id_pengunjung VARCHAR(255),
 	prediksi_waktu_tunggu INT,
 	status_antrian VARCHAR(255),
-	PRIMARY KEY(id_grup_antrian),
+	PRIMARY KEY(id_grup_antrian, nomor_antrian),
 	FOREIGN KEY(id_grup_antrian) REFERENCES grup_antrian(id_grup_antrian),
 	FOREIGN KEY(id_pengunjung) REFERENCES pengunjung(id_pengunjung)
 );
