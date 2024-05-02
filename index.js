@@ -1,3 +1,5 @@
+import mariadb from "mariadb";
+import { readFileSync } from "fs";
 import { fakerID_ID as faker } from "@faker-js/faker"
 
 const generator = {
@@ -102,28 +104,16 @@ const generator = {
 	}
 }
 
-console.log(
-	[
-		generator.pengunjung(),
-		generator.nomor_telepon_pengunjung(1),
-		generator.masukan(1),
-		generator.pengunjung_fast_track(1),
-		generator.wahana(),
-		generator.grup_antrian(1),
-		generator.antrian(1, 1, 1),
-		generator.shift(),
-		generator.pegawai(),
-		generator.nomor_telepon_pegawai(1),
-		generator.menjaga(1, 1, 1),
-		generator.souvenir(),
-		generator.transaksi(1),
-		generator.list_barang(1, 1)
-	]
-)
-
-/*
-import mariadb from "mariadb";
-import { readFileSync } from "fs";
+const objectToInsertQuery = (table, object) => {
+	let attribute = [];
+	let value = [];
+	Object.entries(object).forEach(([k, v]) => {
+		attribute.push(k)
+		if (typeof v === "string") v = `"${v}"`
+		value.push(v)
+	})
+	return `INSERT INTO ${table} (${attribute.join(",")}) VALUE (${value.join(",")})`
+}
 
 const pool = mariadb.createPool({
 	user: "root",
@@ -134,9 +124,12 @@ const pool = mariadb.createPool({
 const conn = await pool.getConnection();
 
 const ddl = readFileSync("ddl.sql", "utf8");
-const ddlResult = await conn.query(ddl);
-console.log(ddlResult);
+await conn.query(ddl);
+
+await conn.query("USE DuhFun");
+for (let i = 0; i < 100; ++i) {
+	await conn.query(objectToInsertQuery("pengunjung", generator.pengunjung()));
+}
 
 conn.end();
 pool.end();
-*/
