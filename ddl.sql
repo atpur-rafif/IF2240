@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS DuhFun;
 CREATE DATABASE DuhFun;
-
 USE DuhFun;
+
 CREATE TABLE pengunjung (
 	id_pengunjung VARCHAR(255),
 	nama_lengkap VARCHAR(255),
