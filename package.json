@@ -1,6 +1,7 @@
 {
 	"type": "module",
 	"dependencies": {
+		"@faker-js/faker": "^8.4.1",
 		"mariadb": "^3.3.0"
 	}
 }
