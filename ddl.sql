@@ -15,36 +15,23 @@ CREATE TABLE pengunjung (
 CREATE TABLE nomor_telepon_pengunjung (
 	id_pengunjung VARCHAR(255),
 	nomor_telepon VARCHAR(64),
-	PRIMARY KEY(id_pengunjung, nomor_telepon)
+	PRIMARY KEY(id_pengunjung, nomor_telepon),
+	FOREIGN KEY(id_pengunjung) REFERENCES pengunjung(id_pengunjung)
 );
 
 CREATE TABLE masukan (
 	id_masukan VARCHAR(255),
 	id_pengunjung VARCHAR(255),
 	nilai INT,
-	PRIMARY KEY(id_masukan, id_pengunjung)
+	PRIMARY KEY(id_masukan, id_pengunjung),
+	FOREIGN KEY(id_pengunjung) REFERENCES pengunjung(id_pengunjung)
 );
 
 CREATE TABLE pengunjung_fast_track (
 	id_pengunjung VARCHAR(255),
 	level_akses VARCHAR(255),
-	PRIMARY KEY(id_pengunjung)
-);
-
-CREATE TABLE antrian (
-	id_grup_antrian VARCHAR(255),
-	nomor_antrian VARCHAR(255),
-	id_pengunjung VARCHAR(255),
-	prediksi_waktu_tunggu INT,
-	status_antrian VARCHAR(255),
-	PRIMARY KEY(id_grup_antrian)
-);
-
-CREATE TABLE grup_antrian (
-	id_grup_antrian VARCHAR(255),
-	id_wahana VARCHAR(255),
-	kapasitas INT,
-	PRIMARY KEY(id_grup_antrian)
+	PRIMARY KEY(id_pengunjung),
+	FOREIGN KEY(id_pengunjung) REFERENCES pengunjung(id_pengunjung)
 );
 
 CREATE TABLE wahana (
@@ -54,11 +41,23 @@ CREATE TABLE wahana (
 	PRIMARY KEY(id_wahana)
 );
 
-CREATE TABLE menjaga (
-	id_shift VARCHAR(255),
-	id_pegawai VARCHAR(255),
+CREATE TABLE grup_antrian (
+	id_grup_antrian VARCHAR(255),
 	id_wahana VARCHAR(255),
-	PRIMARY KEY(id_shift, id_pegawai)
+	kapasitas INT,
+	PRIMARY KEY(id_grup_antrian),
+	FOREIGN KEY(id_wahana) REFERENCES wahana(id_wahana)
+);
+
+CREATE TABLE antrian (
+	id_grup_antrian VARCHAR(255),
+	nomor_antrian VARCHAR(255),
+	id_pengunjung VARCHAR(255),
+	prediksi_waktu_tunggu INT,
+	status_antrian VARCHAR(255),
+	PRIMARY KEY(id_grup_antrian),
+	FOREIGN KEY(id_grup_antrian) REFERENCES grup_antrian(id_grup_antrian),
+	FOREIGN KEY(id_pengunjung) REFERENCES pengunjung(id_pengunjung)
 );
 
 CREATE TABLE shift (
@@ -80,7 +79,18 @@ CREATE TABLE pegawai (
 CREATE TABLE nomor_telepon_pegawai (
 	id_pegawai VARCHAR(255),
 	nomor_telepon VARCHAR(255),
-	PRIMARY KEY(id_pegawai, nomor_telepon)
+	PRIMARY KEY(id_pegawai, nomor_telepon),
+	FOREIGN KEY(id_pegawai) REFERENCES pegawai(id_pegawai)
+);
+
+CREATE TABLE menjaga (
+	id_shift VARCHAR(255),
+	id_pegawai VARCHAR(255),
+	id_wahana VARCHAR(255),
+	PRIMARY KEY(id_shift, id_pegawai),
+	FOREIGN KEY(id_shift) REFERENCES shift(id_shift),
+	FOREIGN KEY(id_pegawai) REFERENCES pegawai(id_pegawai),
+	FOREIGN KEY(id_wahana) REFERENCES wahana(id_wahana)
 );
 
 CREATE TABLE souvenir (
@@ -91,21 +101,20 @@ CREATE TABLE souvenir (
 	PRIMARY KEY(id_souvenir)
 );
 
-CREATE TABLE list_barang (
-	id_transaksi VARCHAR(255),
-	id_souvenir VARCHAR(255),
-	jumlah VARCHAR(255),
-	PRIMARY KEY(id_transaksi, id_souvenir)
-);
-
 CREATE TABLE transaksi (
 	id_transaksi VARCHAR(255),
 	id_pengunjung VARCHAR(255),
 	tanggal DATE,
 	total INT,
-	PRIMARY KEY(id_transaksi)
+	PRIMARY KEY(id_transaksi),
+	FOREIGN KEY(id_pengunjung) REFERENCES pengunjung(id_pengunjung)
 );
 
-
-
-
+CREATE TABLE list_barang (
+	id_transaksi VARCHAR(255),
+	id_souvenir VARCHAR(255),
+	jumlah VARCHAR(255),
+	PRIMARY KEY(id_transaksi, id_souvenir),
+	FOREIGN KEY(id_souvenir) REFERENCES souvenir(id_souvenir),
+	FOREIGN KEY(id_transaksi) REFERENCES transaksi(id_transaksi)
+);
