@@ -20,9 +20,10 @@ CREATE TABLE nomor_telepon_pengunjung (
 );
 
 CREATE TABLE masukan (
-	id_masukan INT,
+	id_masukan INT AUTO_INCREMENT,
 	id_pengunjung INT,
 	nilai INT,
+	masukan VARCHAR(1023),
 	PRIMARY KEY(id_masukan, id_pengunjung),
 	FOREIGN KEY(id_pengunjung) REFERENCES pengunjung(id_pengunjung)
 );
@@ -45,13 +46,14 @@ CREATE TABLE grup_antrian (
 	id_grup_antrian INT AUTO_INCREMENT,
 	id_wahana INT,
 	kapasitas INT,
+	tanggal DATETIME,
 	PRIMARY KEY(id_grup_antrian),
 	FOREIGN KEY(id_wahana) REFERENCES wahana(id_wahana)
 );
 
 CREATE TABLE antrian (
 	id_grup_antrian INT,
-	nomor_antrian VARCHAR(255),
+	nomor_antrian INT,
 	id_pengunjung INT,
 	prediksi_waktu_tunggu INT,
 	status_antrian VARCHAR(255),
@@ -70,6 +72,7 @@ CREATE TABLE shift (
 CREATE TABLE pegawai (
 	id_pegawai INT AUTO_INCREMENT,
 	nik VARCHAR(255),
+	nama_lengkap VARCHAR(255),
 	alamat_jalan VARCHAR(255),
 	alamat_kota VARCHAR(255),
 	alamat_provinsi VARCHAR(255),
@@ -85,7 +88,7 @@ CREATE TABLE nomor_telepon_pegawai (
 
 CREATE TABLE menjaga (
 	id_shift INT,
-	id_pegawai INT AUTO_INCREMENT,
+	id_pegawai INT,
 	id_wahana INT,
 	PRIMARY KEY(id_shift, id_pegawai),
 	FOREIGN KEY(id_shift) REFERENCES shift(id_shift),
