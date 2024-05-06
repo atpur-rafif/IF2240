@@ -43,7 +43,8 @@ const generator = {
 	grup_antrian: (id_wahana) => {
 		return {
 			id_wahana,
-			kapasitas: faker.number.int({ min: 10, max: 500 })
+			kapasitas: faker.number.int({ min: 10, max: 500 }),
+			tanggal: faker.date.anytime().toISOString().split('T')[0]
 		}
 	},
 	antrian: (id_grup_antrian, id_pengunjung, nomor_antrian) => {
