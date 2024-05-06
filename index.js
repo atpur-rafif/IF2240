@@ -119,6 +119,7 @@ const objectToInsertQuery = (table, object) => {
 
 const pool = mariadb.createPool({
 	user: "root",
+	password: "root",
 	multipleStatements: true,
 });
 
