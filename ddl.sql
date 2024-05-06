@@ -46,7 +46,7 @@ CREATE TABLE grup_antrian (
 	id_grup_antrian INT AUTO_INCREMENT,
 	id_wahana INT,
 	kapasitas INT,
-	tanggal DATETIME,
+	tanggal DATE,
 	PRIMARY KEY(id_grup_antrian),
 	FOREIGN KEY(id_wahana) REFERENCES wahana(id_wahana)
 );
@@ -55,7 +55,7 @@ CREATE TABLE antrian (
 	id_grup_antrian INT,
 	nomor_antrian INT,
 	id_pengunjung INT,
-	prediksi_waktu_tunggu INT,
+	prediksi_waktu_tunggu TIME,
 	status_antrian VARCHAR(255),
 	PRIMARY KEY(id_grup_antrian, nomor_antrian),
 	FOREIGN KEY(id_grup_antrian) REFERENCES grup_antrian(id_grup_antrian),

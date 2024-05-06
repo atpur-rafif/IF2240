@@ -50,14 +50,15 @@ const generator = {
 	antrian: (id_grup_antrian, id_pengunjung, nomor_antrian) => {
 		return {
 			id_grup_antrian, id_pengunjung, nomor_antrian,
-			prediksi_waktu_tunggu: faker.number.int({ min: 10, max: 100 })
+			prediksi_waktu_tunggu: faker.date.anytime().getHours() + ":" + faker.number.int({min: 0, max: 59}) + ":00",
+			status_antrian: faker.helpers.arrayElement(["menunggu", "sudah naik"])
 		}
 	},
 	shift: () => {
 		const start = faker.date.anytime().getHours()
 		return {
-			mulai: start,
-			selesai: start + 2
+			mulai: start +":00:00",
+			selesai: start + 2 +":00:00"
 		}
 	},
 	pegawai: () => {
@@ -118,7 +119,6 @@ const objectToInsertQuery = (table, object) => {
 
 const pool = mariadb.createPool({
 	user: "root",
-	password: "root",
 	multipleStatements: true,
 });
 
