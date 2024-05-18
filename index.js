@@ -142,8 +142,6 @@ await connection.query("USE DuhFun");
 // await connection.query(fitur_tambahan);
 // await connection.query("USE DuhFun");
 
-process.exit();
-
 let query = "";
 
 // pengunjung
